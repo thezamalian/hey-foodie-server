@@ -29,82 +29,82 @@ async function run() {
         });
 
         // GET API - single Product
-        // app.get('/our-foods/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     console.log('Getting a specific product');
+        app.get('/foods/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log('Getting a specific product');
 
-        //     const query = {_id: ObjectId(id)};
-        //     const food = await foodCollection.findOne(query);
+            const query = {_id: ObjectId(id)};
+            const food = await foodCollection.findOne(query);
 
-        //     console.log(food);
-        //     res.send(food);
-        // });
+            console.log(food);
+            res.send(food);
+        });
 
-        // // GET API - All Orders
-        // app.get("/all-orders", async (req, res) => {
-        //     const cursor = orderCollection.find({});
-        //     const orders = await cursor.toArray();
+        // GET API - All Orders
+        app.get("/all-orders", async (req, res) => {
+            const cursor = orderCollection.find({});
+            const orders = await cursor.toArray();
 
-        //     console.log("All orders has been loaded");
-        //     res.send(orders);
-        // });
+            console.log("All orders has been loaded");
+            res.send(orders);
+        });
 
-        // // GET API - My Orders
-        // app.get("/my-orders/:email", async( req, res) => {
-        //     const email = req.params.email;
-        //     const query = {maker: { email: email}}; 
-        //     const cursor = await orderCollection.find(query);
-        //     const myOrders = await cursor.toArray();
+        // GET API - My Orders
+        app.get("/my-orders/:email", async( req, res) => {
+            const email = req.params.email;
+            const query = {bookingData: { email: email}}; 
+            const cursor = await orderCollection.find(query);
+            const myOrders = await cursor.toArray();
 
-        //     if ((await cursor.count()) === 0) {
-        //         console.log("No documents found!");
-        //     }
+            if ((await cursor.count()) === 0) {
+                console.log("No documents found!");
+            }
 
-        //     console.log("My orders has been loaded.");
-        //     res.send(myOrders);
-        // });
+            console.log("My orders has been loaded.");
+            res.send(myOrders);
+        });
 
-        // // POST API - Book an Order
-        // app.post('/order', async (req, res) => {
-        //     const order = req.body;
-        //     console.log('Hit the post API', order);
+        // POST API - Book an Order
+        app.post('/order', async (req, res) => {
+            const order = req.body;
+            console.log('Hit the post API', order);
 
-        //     const result = await orderCollection.insertOne(order);
-        //     console.log(result);
-        //     res.json(result);
-        // });
+            const result = await orderCollection.insertOne(order);
+            console.log(result);
+            res.json(result);
+        });
 
-        // // UPDATE API - Update an Order's status
-        // app.put('/orders/:id', async (req, res) => {
-        //     const id = req.params.id;
-        //     const updatedOrder = req.body;
+        // UPDATE API - Update an Order's status
+        app.put('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedOrder = req.body;
 
-        //     const filter = { _id: ObjectId(id) };
-        //     const options = {upsert: true};
-        //     const updateDoc = {
-        //         $set: {
-        //             isPending: updatedOrder.isPending
-        //         }
-        //     };
+            const filter = { _id: ObjectId(id) };
+            const options = {upsert: true};
+            const updateDoc = {
+                $set: {
+                    isPending: updatedOrder.isPending
+                }
+            };
             
-        //     const updatedObject = await orderCollection.updateOne(filter, updateDoc);
+            const updatedObject = await orderCollection.updateOne(filter, updateDoc);
 
-        //     console.log(updatedObject);
-        //     res.json(updatedObject);
-        // });
+            console.log(updatedObject);
+            res.json(updatedObject);
+        });
 
-        // // DELETE API - Delete an Order
-        // app.delete('/orders/:id', async(req, res) => {
-        //     const id = req.params.id;
-        //     const query = {_id: ObjectId(id)}
+        // DELETE API - Delete an Order
+        app.delete('/orders/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)}
 
-        //     const result = await orderCollection.deleteOne(query);
-        //     const found = await orderCollection.findOne(query);
+            const result = await orderCollection.deleteOne(query);
+            const found = await orderCollection.findOne(query);
 
-        //     console.log(result);
-        //     console.log(found);
-        //     res.json(result);
-        // });
+            console.log(result);
+            console.log(found);
+            res.json(result);
+        });
 
         console.log('Database connected successfully!');
     }
